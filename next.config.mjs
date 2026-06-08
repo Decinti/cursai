@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  // Disable static optimization for all pages — this is a fully dynamic auth app
+  // that requires Supabase env vars at runtime
+  experimental: {},
+}
 
-export default nextConfig;
+export default nextConfig
