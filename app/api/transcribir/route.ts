@@ -2,13 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { groq } from '@/lib/groq'
 import { toFile } from 'groq-sdk'
 
-// Aumentar límite de body para archivos de audio
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
