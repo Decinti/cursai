@@ -77,7 +77,10 @@ export default function Grabadora({ claseId, ramoId }: Props) {
             body: formData,
           })
 
-          if (!transcRes.ok) throw new Error('Error al transcribir el audio')
+          if (!transcRes.ok) {
+            const body = await transcRes.json().catch(() => ({}))
+            throw new Error(body.error || `Error al transcribir (${transcRes.status})`)
+          }
           const { transcripcion } = await transcRes.json()
 
           // 2. Sintetizar
@@ -87,7 +90,10 @@ export default function Grabadora({ claseId, ramoId }: Props) {
             body: JSON.stringify({ transcripcion }),
           })
 
-          if (!sintRes.ok) throw new Error('Error al generar la síntesis')
+          if (!sintRes.ok) {
+            const body = await sintRes.json().catch(() => ({}))
+            throw new Error(body.error || `Error al sintetizar (${sintRes.status})`)
+          }
           const { sintesis } = await sintRes.json()
 
           // 3. Guardar en Supabase
